@@ -32,6 +32,14 @@ python3 -m http.server 8000
 # abrí http://localhost:8000
 ```
 
+## Margen (gastos)
+
+En `margen/` hay otra app: **Margen**, para controlar gastos, ingresos y metas de ahorro. Te dice cuánto podés gastar por día.
+
+- Queda en `https://<usuario>.github.io/prueba-/margen/`.
+- Se instala igual (desde *Ajustes → Instalar app*) y funciona sin conexión.
+- Tiene su propio `manifest.webmanifest`, `sw.js` e `icons/` dentro de `margen/`.
+
 ## Archivos
 
 - `index.html` — la app completa (HTML, CSS y JS).
