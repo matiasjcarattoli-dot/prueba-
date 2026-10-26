@@ -38,6 +38,7 @@ En `margen/` hay otra app: **Margen**, para controlar gastos, ingresos y metas d
 
 - Queda en `https://<usuario>.github.io/prueba-/margen/`.
 - Se instala igual (desde *Ajustes → Instalar app*) y funciona sin conexión.
+- Para compartirla: *Ajustes → Compartí la app* (enlace, botón de compartir y código QR). `margen/qr.png` es el QR en alta resolución para imprimir o mandar.
 - Tiene su propio `manifest.webmanifest`, `sw.js` e `icons/` dentro de `margen/`.
 
 ## Archivos
