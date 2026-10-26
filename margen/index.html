@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Margen — tus gastos, en claro</title>
 <meta name="description" content="Controlá tus gastos, ingresos y metas de ahorro. Te dice cuánto podés gastar por día.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Margen">
+<meta property="og:title" content="Margen — tus gastos, en claro">
+<meta property="og:description" content="Controlá tus gastos, ingresos y metas de ahorro. Te dice cuánto podés gastar por día.">
+<meta property="og:url" content="https://matiasjcarattoli-dot.github.io/prueba-/margen/">
+<meta property="og:image" content="https://matiasjcarattoli-dot.github.io/prueba-/margen/icons/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#4a2fe0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Margen">
@@ -69,6 +78,7 @@ nav button span{font-size:20px}nav button[aria-current="page"]{color:var(--acc);
 <div id="ui"></div>
 <script>
 const K='margen-v3';
+const APP_URL='https://matiasjcarattoli-dot.github.io/prueba-/margen/';
 const BASE={Alquiler:{c:'#6366f1',i:'🏠',w:['alquiler','expensas','inmobiliaria']},
 Gimnasio:{c:'#f97316',i:'🏋️',w:['gimnasio','gym','megatlon','smartfit','crossfit','pilates']},
 Supermercado:{c:'#22c55e',i:'🛒',w:['super','carrefour','coto','dia ','jumbo','disco','verdul','carnicer','rappi','panader']},
@@ -187,6 +197,7 @@ function planUI(g){
 function ajustes(){
   return`<div class="hello"><h1>Ajustes</h1></div>
 ${installed()?'':`<div class="card"><h2>Instalala como app</h2><p class="mute" style="margin-top:0">Queda con su ícono en tu celular y funciona sin conexión.</p><button class="w" onclick="install()">Instalar app</button><div id="steps"></div></div>`}
+<div class="card"><h2>Compartí la app</h2><p class="mute" style="margin-top:0">Pasale el enlace o el código QR a quien quieras. La abre en el celular y la instala desde Ajustes.</p><img src="icons/qr.svg" width="200" height="200" alt="Código QR con el enlace de la app" style="display:block;margin:0 auto 10px;background:#fff;border-radius:14px;padding:8px"><p style="text-align:center;font-weight:700;word-break:break-all;margin:0 0 12px">${APP_URL}</p><div class="two" style="grid-template-columns:1fr 1fr"><button onclick="shareApp()">Compartir</button><button class="g" onclick="copyApp(this)">Copiar enlace</button></div></div>
 <div class="card"><h2>Tus números</h2><label for="s1">Ingreso mensual estimado</label><input id="s1" inputmode="numeric" value="${S.inc||''}"><label for="s2">Gastos fijos por mes</label><input id="s2" inputmode="numeric" value="${S.fixed||''}"><p style="margin-top:14px"><button class="w" onclick="saveBase()">Guardar</button></p></div>
 <div class="card"><h2>Moneda</h2><div class="seg"><button aria-pressed="${S.cur==='ARS'}" onclick="S.cur='ARS';save();render()">Pesos</button><button aria-pressed="${S.cur==='USD'}" onclick="S.cur='USD';save();render()">Dólares</button></div><label for="fxr">Cotización del dólar (pesos por USD)</label><input id="fxr" inputmode="numeric" value="${S.fx}" onchange="S.fx=num(this.value)||1200;save();render()"><p class="mute">Los montos se guardan en pesos y se convierten con esta cotización.</p></div>
 <div class="card"><h2>Límites por categoría</h2>${Object.keys(CAT).map(k=>`<div class="lim"><span class="ic" style="background:${CAT[k].c}26;width:34px;height:34px;font-size:16px">${CAT[k].i}</span><span>${k}</span><input inputmode="numeric" placeholder="Sin límite" value="${S.lim[k]||''}" aria-label="Límite de ${k}" onchange="setLim('${k}',this.value)"></div>`).join('')}</div>
@@ -244,6 +255,12 @@ function render(){
 }
 render();
 
+async function shareApp(){
+  const t='Controlá tus gastos y cuánto podés gastar por día con Margen:';
+  if(navigator.share){try{await navigator.share({title:'Margen',text:t,url:APP_URL})}catch(e){}return}
+  location.href='https://wa.me/?text='+encodeURIComponent(t+' '+APP_URL);
+}
+async function copyApp(b){try{await navigator.clipboard.writeText(APP_URL);b.textContent='¡Copiado!';setTimeout(()=>{b.textContent='Copiar enlace'},2000)}catch(e){prompt('Copiá el enlace:',APP_URL)}}
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 const ua=navigator.userAgent,ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
 const inApp=/FBAN|FBAV|Instagram|WhatsApp|Line\/|Twitter|TikTok/.test(ua),iosOther=ios&&/CriOS|FxiOS|EdgiOS/.test(ua);
