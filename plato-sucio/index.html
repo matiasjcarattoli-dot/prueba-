@@ -12,7 +12,12 @@
 <meta name="apple-mobile-web-app-title" content="Plato Sucio">
 <meta property="og:title" content="Plato Sucio">
 <meta property="og:description" content="Roles ocultos, sabotaje y alta cocina. De 2 a 10 jugadores pasándose el celu.">
-<meta property="og:image" content="icons/icon-512.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://matiasjcarattoli-dot.github.io/prueba-/plato-sucio/">
+<meta property="og:image" content="https://matiasjcarattoli-dot.github.io/prueba-/plato-sucio/qr-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
@@ -117,6 +122,7 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>'
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const pick = a => a[Math.floor(Math.random() * a.length)];
 const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+const APP_URL = 'https://matiasjcarattoli-dot.github.io/prueba-/plato-sucio/';
 const KEY = 'saborAmargo.v1', NAMES_KEY = 'saborAmargo.names';
 let G = null, ui = {}, tick = null;
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(G)); } catch (e) {} };
@@ -279,6 +285,7 @@ function vSetup() {
     <div class="toggle"><label for="timed">Turnos con reloj (${TURN_SECS} s)</label><input type="checkbox" id="timed" ${ui.timed ? 'checked' : ''}></div>
     <p class="small mut" id="modeinfo">${modeInfo(n, mode)}</p></div>
     <button class="btn sec" data-act="rules">📖 Cómo se juega</button>
+    <button class="btn sec" data-act="sharecard">🤝 Compartí el juego</button>
     ${installed() ? '' : `<div class="card"><h3 style="margin-top:0">📲 Instalala como app</h3><p class="small mut">Queda con su ícono en tu celular, se abre a pantalla completa y funciona sin internet.</p><button class="btn sm" data-act="install">Instalar app</button><div id="steps"></div></div>`}
     ${dock('Empezar partida', 'start', n < 2 ? 'disabled' : '')}`;
 }
@@ -475,6 +482,9 @@ document.addEventListener('click', e => {
     case 'del': ui.names.splice(+el.dataset.i, 1); localStorage.setItem(NAMES_KEY, JSON.stringify(ui.names)); render(); break;
     case 'rules': modal(rulesHTML()); break;
     case 'install': install(); break;
+    case 'sharecard': modal(shareHTML()); break;
+    case 'share': shareApp(); break;
+    case 'copy': copyApp(el); break;
     case 'resume': try { G = JSON.parse(localStorage.getItem(KEY)); } catch (err) {} render(); break;
     case 'start': {
       const names = ui.names.map(s => s.trim()).filter(Boolean);
@@ -516,6 +526,25 @@ document.addEventListener('click', e => {
     case 'quit': if (confirm('¿Abandonar la partida? Se pierde el progreso.')) { document.querySelector('.modal').remove(); localStorage.removeItem(KEY); G = null; render(); } break;
   }
 });
+
+// ───────── Compartir ─────────
+function shareHTML() {
+  return `<div class="card"><div class="top"><h2 style="margin:0">🤝 Compartí el juego</h2><button class="x" data-act="close">×</button></div>
+    <p class="small mut">Que lo escaneen con la cámara o mandales el enlace. Lo abren y tocan <b>Instalar app</b>.</p>
+    <img src="icons/qr.svg" width="220" height="220" alt="Código QR con el enlace del juego" style="display:block;margin:12px auto;background:#fff;border-radius:16px;padding:10px">
+    <p class="center" style="font-weight:700;word-break:break-all;font-size:14px">${APP_URL}</p>
+    <div class="row"><button class="btn grow" data-act="share">Compartir</button><button class="btn sec grow" data-act="copy">Copiar enlace</button></div>
+    <a class="btn sec center" style="text-decoration:none;box-sizing:border-box" href="qr.png" download="plato-sucio-qr.png">Descargar QR para imprimir</a></div>`;
+}
+async function shareApp() {
+  const t = '¡Juguemos Plato Sucio! Roles ocultos y sabotaje en la cocina, de 2 a 10 jugadores. Abrilo y tocá Instalar app:';
+  if (navigator.share) { try { await navigator.share({ title: 'Plato Sucio', text: t, url: APP_URL }); } catch (e) {} return; }
+  location.href = 'https://wa.me/?text=' + encodeURIComponent(t + ' ' + APP_URL);
+}
+async function copyApp(btn) {
+  try { await navigator.clipboard.writeText(APP_URL); } catch (e) { prompt('Copiá el enlace:', APP_URL); return; }
+  const t = btn.textContent; btn.textContent = '¡Copiado! ✔'; setTimeout(() => btn.textContent = t, 1600);
+}
 
 // ───────── Instalación ─────────
 const ua = navigator.userAgent, ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
