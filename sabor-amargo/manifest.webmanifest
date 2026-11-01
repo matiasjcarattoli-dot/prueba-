@@ -1,0 +1,18 @@
+{
+  "name": "Último Turno: Sabor Amargo",
+  "short_name": "Sabor Amargo",
+  "description": "Juego de roles ocultos y sabotaje en la final de un reality de cocina. De 2 a 10 jugadores, con un solo celular.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#140a07",
+  "theme_color": "#140a07",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
