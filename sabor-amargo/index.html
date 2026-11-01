@@ -6,6 +6,10 @@
 <title>Último Turno: Sabor Amargo</title>
 <meta name="description" content="Juego de roles ocultos y sabotaje en la final de un reality de cocina. De 2 a 10 jugadores, con un solo celular.">
 <meta name="theme-color" content="#140a07">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sabor Amargo">
 <meta property="og:title" content="Último Turno: Sabor Amargo">
 <meta property="og:description" content="Roles ocultos, sabotaje y alta cocina. De 2 a 10 jugadores pasándose el celu.">
 <meta property="og:image" content="icons/icon-512.png">
@@ -275,6 +279,7 @@ function vSetup() {
     <div class="toggle"><label for="timed">Turnos con reloj (${TURN_SECS} s)</label><input type="checkbox" id="timed" ${ui.timed ? 'checked' : ''}></div>
     <p class="small mut" id="modeinfo">${modeInfo(n, mode)}</p></div>
     <button class="btn sec" data-act="rules">📖 Cómo se juega</button>
+    ${installed() ? '' : `<div class="card"><h3 style="margin-top:0">📲 Instalala como app</h3><p class="small mut">Queda con su ícono en tu celular, se abre a pantalla completa y funciona sin internet.</p><button class="btn sm" data-act="install">Instalar app</button><div id="steps"></div></div>`}
     ${dock('Empezar partida', 'start', n < 2 ? 'disabled' : '')}`;
 }
 function modeInfo(n, mode) {
@@ -469,6 +474,7 @@ document.addEventListener('click', e => {
     case 'add': ui.names.push(''); render(); setTimeout(() => { const ins = document.querySelectorAll('[data-name]'); ins[ins.length - 1].focus(); }); break;
     case 'del': ui.names.splice(+el.dataset.i, 1); localStorage.setItem(NAMES_KEY, JSON.stringify(ui.names)); render(); break;
     case 'rules': modal(rulesHTML()); break;
+    case 'install': install(); break;
     case 'resume': try { G = JSON.parse(localStorage.getItem(KEY)); } catch (err) {} render(); break;
     case 'start': {
       const names = ui.names.map(s => s.trim()).filter(Boolean);
@@ -510,6 +516,24 @@ document.addEventListener('click', e => {
     case 'quit': if (confirm('¿Abandonar la partida? Se pierde el progreso.')) { document.querySelector('.modal').remove(); localStorage.removeItem(KEY); G = null; render(); } break;
   }
 });
+
+// ───────── Instalación ─────────
+const ua = navigator.userAgent, ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+const inApp = /FBAN|FBAV|Instagram|WhatsApp|Line\/|Twitter|TikTok/.test(ua), iosOther = ios && /CriOS|FxiOS|EdgiOS/.test(ua);
+function installed() { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; }
+let deferred = null;
+function steps() {
+  if (inApp) return 'Estás dentro de otra app (WhatsApp, Instagram…). Tocá el menú, elegí <b>Abrir en el navegador</b> y volvé a tocar Instalar.';
+  if (iosOther) return 'En iPhone se instala desde <b>Safari</b>: copiá el enlace, abrilo en Safari y tocá <b>Compartir</b> → <b>Agregar a inicio</b>.';
+  if (ios) return 'Tocá <b>Compartir</b> (el cuadrado con la flecha) en Safari → <b>Agregar a inicio</b> → <b>Agregar</b>.';
+  return 'Abrí el menú del navegador (⋮) y elegí <b>Instalar app</b> o <b>Agregar a pantalla principal</b>.';
+}
+async function install() {
+  if (deferred) { deferred.prompt(); await deferred.userChoice.catch(() => null); deferred = null; render(); return; }
+  const el = $('#steps'); if (el) el.innerHTML = `<p class="small" style="margin-top:10px">${steps()}</p>`;
+}
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; });
+addEventListener('appinstalled', () => { deferred = null; if (!G) render(); });
 
 render();
 if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
