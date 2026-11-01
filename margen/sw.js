@@ -1,5 +1,5 @@
 // Cachea la app para que funcione sin conexión. Subí la versión al cambiar archivos.
-const CACHE = 'margen-v5';
+const CACHE = 'margen-v6';
 const ASSETS = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/icon-180.png', 'icons/qr.svg'];
 
 self.addEventListener('install', e => {
@@ -7,7 +7,7 @@ self.addEventListener('install', e => {
 });
 
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('margen') && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
 
 // Red primero para la página (así se ven los cambios), caché primero para el resto.
