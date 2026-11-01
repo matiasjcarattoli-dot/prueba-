@@ -41,15 +41,15 @@ En `margen/` hay otra app: **Margen**, para controlar gastos, ingresos y metas d
 - Para compartirla: *Ajustes → Compartí la app* (enlace, botón de compartir y código QR). `margen/qr.png` es el QR en alta resolución para imprimir o mandar.
 - Tiene su propio `manifest.webmanifest`, `sw.js` e `icons/` dentro de `margen/`.
 
-## Último Turno: Sabor Amargo (juego)
+## Plato Sucio (juego)
 
-En `sabor-amargo/` hay un juego de fiesta de **roles ocultos y sabotaje** ambientado en la final de un reality de cocina. De 2 a 10 jugadores, con **un solo celular que pasa de mano en mano**.
+En `plato-sucio/` hay un juego de fiesta de **roles ocultos y sabotaje** ambientado en la final de un reality de cocina. De 2 a 10 jugadores, con **un solo celular que pasa de mano en mano**.
 
 - **2 a 4 jugadores, Duelo:** todos contra todos, gana quien sume más puntos en 3 platos.
 - **5 a 10 jugadores, Roles ocultos:** 1 a 3 saboteadores infiltrados. Después de cada plato hay debate y votación secreta.
 - Cada chef tiene un personaje con habilidad (Sommelier, Pastelero, Inspector de Sanidad…) y herramientas como el Salero Táctico, el Cuchillo Santoku o el Extintor.
 - Nadie queda eliminado: el saboteador descubierto sigue jugando, y los platos arruinados dan el poder de Crítico Fantasma.
-- Queda en `https://<usuario>.github.io/prueba-/sabor-amargo/`, se instala como app y funciona sin conexión. La partida se guarda si se cierra la página.
+- Queda en `https://<usuario>.github.io/prueba-/plato-sucio/`, se instala como app y funciona sin conexión. La partida se guarda si se cierra la página. El enlace viejo `/sabor-amargo/` redirige acá.
 
 ## Archivos
 

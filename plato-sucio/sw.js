@@ -1,5 +1,5 @@
 // Cachea el juego para que funcione sin conexión. Subí la versión al cambiar archivos.
-const CACHE = 'sabor-amargo-v2';
+const CACHE = 'plato-sucio-v1';
 const ASSETS = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png'];
 
 self.addEventListener('install', e => {
@@ -7,7 +7,7 @@ self.addEventListener('install', e => {
 });
 
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('sabor-amargo') && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => (k.startsWith('plato-sucio') || k.startsWith('sabor-amargo')) && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
 
 self.addEventListener('fetch', e => {
