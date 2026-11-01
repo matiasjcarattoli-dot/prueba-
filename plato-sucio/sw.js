@@ -1,5 +1,5 @@
 // Cachea el juego para que funcione sin conexión. Subí la versión al cambiar archivos.
-const CACHE = 'plato-sucio-v1';
+const CACHE = 'plato-sucio-v2';
 const ASSETS = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png'];
 
 self.addEventListener('install', e => {

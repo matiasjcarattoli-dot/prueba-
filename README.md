@@ -50,6 +50,7 @@ En `plato-sucio/` hay un juego de fiesta de **roles ocultos y sabotaje** ambient
 - Cada chef tiene un personaje con habilidad (Sommelier, Pastelero, Inspector de Sanidad…) y herramientas como el Salero Táctico, el Cuchillo Santoku o el Extintor.
 - Nadie queda eliminado: el saboteador descubierto sigue jugando, y los platos arruinados dan el poder de Crítico Fantasma.
 - Queda en `https://<usuario>.github.io/prueba-/plato-sucio/`, se instala como app y funciona sin conexión. La partida se guarda si se cierra la página. El enlace viejo `/sabor-amargo/` redirige acá.
+- Para compartirlo: botón *Compartí el juego* en el inicio (QR, enlace, compartir y copiar). `plato-sucio/qr.png` es una tarjeta con el QR para mandar o imprimir.
 
 ## Archivos
 
