@@ -53,7 +53,7 @@ En `plato-sucio/` hay un juego de fiesta de **roles ocultos y sabotaje** ambient
 
 ## Cuentas Claras (calculadoras con anuncios)
 
-En `calculadoras/` hay un sitio de **calculadoras para Argentina** pensado para ganar plata con Google AdSense: sueldo neto, aguinaldo, vacaciones, plazo fijo, cuotas o contado y dólar hoy.
+En `calculadoras/` hay un sitio de **calculadoras para Argentina** pensado para ganar plata con Google AdSense: sueldo neto, aguinaldo, vacaciones, indemnización por despido, horas extra, plazo fijo, cuotas o contado y dólar hoy.
 
 - Queda en `https://<usuario>.github.io/prueba-/calculadoras/`.
 - Cada calculadora es una página propia (`calculadoras/<nombre>/index.html`) con su texto explicativo y preguntas frecuentes, para que Google la encuentre.
