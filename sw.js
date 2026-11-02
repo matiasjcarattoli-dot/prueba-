@@ -1,5 +1,5 @@
 // Cachea la app para que funcione sin conexión. Subí la versión al cambiar archivos.
-const CACHE = 'fitness-v3';
+const CACHE = 'fitness-v4';
 const ASSETS = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/icon-180.png', 'icons/qr.svg'];
 
 self.addEventListener('install', e => {
@@ -15,6 +15,9 @@ self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
   if (req.mode === 'navigate') {
+    // Solo la página de esta app; las demás carpetas (calculadoras, etc.) van directo a la red.
+    const scope = new URL(self.registration.scope).pathname, path = new URL(req.url).pathname;
+    if (path !== scope && path !== scope + 'index.html') return;
     e.respondWith(fetch(req).then(r => { const copy = r.clone(); caches.open(CACHE).then(c => c.put('index.html', copy)); return r; }).catch(() => caches.match('index.html')));
     return;
   }
