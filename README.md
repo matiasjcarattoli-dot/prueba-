@@ -51,6 +51,16 @@ En `plato-sucio/` hay un juego de fiesta de **roles ocultos y sabotaje** ambient
 - Nadie queda eliminado: el saboteador descubierto sigue jugando, y los platos arruinados dan el poder de Crítico Fantasma.
 - Queda en `https://<usuario>.github.io/prueba-/plato-sucio/`, se instala como app y funciona sin conexión. La partida se guarda si se cierra la página. El enlace viejo `/sabor-amargo/` redirige acá.
 
+## Cuentas Claras (calculadoras con anuncios)
+
+En `calculadoras/` hay un sitio de **calculadoras para Argentina** pensado para ganar plata con Google AdSense: sueldo neto, aguinaldo, vacaciones, plazo fijo, cuotas o contado y dólar hoy.
+
+- Queda en `https://<usuario>.github.io/prueba-/calculadoras/`.
+- Cada calculadora es una página propia (`calculadoras/<nombre>/index.html`) con su texto explicativo y preguntas frecuentes, para que Google la encuentre.
+- `comun.js` tiene arriba la constante `ADSENSE_CLIENT`: al pegar el ID de AdSense (`ca-pub-...`), los anuncios aparecen solos en cada `<div class="ad">`.
+- Incluye las páginas que pide AdSense: `privacidad/` y `acerca/`.
+- Para AdSense hace falta un dominio propio (no acepta `github.io`).
+
 ## Archivos
 
 - `index.html` — la app completa (HTML, CSS y JS).
